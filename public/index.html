@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#351638">
+  <title>alpha · Teamspace</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true"><defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m3 3 19 9-19 9 4-9-4-9Z"/><path d="M7 12h15"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m3 9v-2a6 6 0 0 0-3-5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11a9 9 0 0 1-9 9H3l2-5a9 9 0 1 1 16-4Z"/><path d="M8 10h8m-8 4h5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+  </defs></svg>
+
+  <header class="topbar">
+    <a class="brand" href="/?user=An" aria-label="Teamspace">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span>teamspace<span class="brand-dot">.</span></span>
+    </a>
+    <label class="search">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="search" type="search" placeholder="Tìm trong tin nhắn của kênh" aria-label="Tìm tin nhắn trong kênh" autocomplete="off">
+      <kbd>Ctrl K</kbd>
+    </label>
+    <div class="topbar-note">CÔNG NGHỆ WEB <span class="demo-tag">DEMO</span></div>
+  </header>
+
+  <div class="workspace">
+    <nav class="rail" aria-label="Không gian làm việc">
+      <div class="workspace-icon" title="Nhóm Công nghệ web">CW</div>
+      <div class="rail-item selected"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>Kênh</span></div>
+      <span class="rail-bottom">TS</span>
+    </nav>
+
+    <aside class="sidebar">
+      <div class="workspace-heading"><span>Nhóm Công nghệ web</span><span class="workspace-caption">Cùng làm, cùng trao đổi</span></div>
+      <div class="sidebar-label">KÊNH CỦA NHÓM <span>02</span></div>
+      <nav id="channels" class="channel-list" aria-label="Chọn kênh">
+        <a data-channel="alpha" href="/?channel=alpha"><span class="hash">#</span><span>alpha</span><span class="channel-live"></span></a>
+        <a data-channel="beta" href="/?channel=beta"><span class="hash">#</span><span>beta</span><span class="channel-live"></span></a>
+      </nav>
+      <div class="sidebar-label people-label">ĐANG TRỰC TUYẾN <span id="online-count">0</span></div>
+      <ul id="online-users" class="online-users"><li class="online-placeholder">Chưa có kết nối</li></ul>
+      <div class="sidebar-space"></div>
+      <button id="change-user" class="profile" type="button" title="Đổi tên hiển thị">
+        <span id="profile-avatar" class="avatar tone-0">AN</span>
+        <span class="profile-copy"><strong id="profile-name">An</strong><span>Thành viên · Đổi tên</span></span>
+        <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg>
+      </button>
+    </aside>
+
+    <main class="chat">
+      <header class="channel-header">
+        <div class="channel-heading"><h1><span>#</span> <span id="channel-name">alpha</span></h1><p id="channel-description">Kênh trao đổi chung của nhóm</p></div>
+        <div class="channel-meta"><div id="member-avatars" class="member-avatars" aria-hidden="true"></div><span id="member-label">0 trực tuyến</span><span class="header-divider"></span><span id="connection-status" class="connection-status connecting"><span></span><strong>Đang kết nối</strong></span></div>
+      </header>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <div id="search-info" class="search-info" role="status" hidden></div>
+      <section id="conversation" class="conversation" aria-label="Cuộc trò chuyện">
+        <div class="channel-intro"><div class="intro-hash">#</div><h2>Chào mừng đến với <span id="intro-channel">#alpha</span></h2><p>Một nơi để chia sẻ ý tưởng, cập nhật công việc và giữ kết nối với cả nhóm.</p></div>
+        <div class="day-divider"><span id="day-label">Hôm nay</span></div>
+        <div id="empty-state" class="empty-state">
+          <svg viewBox="0 0 160 100" aria-hidden="true"><rect class="bubble-one" x="14" y="13" width="98" height="56" rx="14"/><path class="bubble-one" d="m31 66-2 16 23-16"/><path class="bubble-line" d="M34 32h57M34 46h37"/><rect class="bubble-two" x="86" y="47" width="59" height="35" rx="11"/><path class="bubble-two" d="m133 79 1 12-16-12"/><circle class="bubble-dot" cx="103" cy="64" r="3"/><circle class="bubble-dot" cx="116" cy="64" r="3"/><circle class="bubble-dot" cx="129" cy="64" r="3"/></svg>
+          <h3>Nơi cuộc trò chuyện bắt đầu</h3><p>Gửi lời chào đầu tiên đến cả nhóm.</p>
+        </div>
+        <ol id="messages" class="messages" role="log" aria-live="polite" aria-relevant="additions"></ol>
+        <div id="no-results" class="no-results" hidden>Không tìm thấy tin nhắn phù hợp.</div>
+      </section>
+      <button id="new-messages" class="new-messages" type="button" hidden>Tin nhắn mới ↓</button>
+      <footer class="composer-area">
+        <form id="composer" class="composer">
+          <label class="sr-only" for="message-input">Nội dung tin nhắn</label>
+          <textarea id="message-input" rows="2" maxlength="4000" placeholder="Nhắn tin đến #alpha" aria-describedby="composer-help"></textarea>
+          <div class="composer-toolbar"><div class="composer-hint"><span class="mini-hash">#</span><span id="composer-channel">Gửi đến cả kênh</span></div><div class="composer-actions"><span id="character-count">0 / 4000</span><button id="send-button" class="send-button" type="submit" disabled aria-label="Gửi tin nhắn"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg><span>Gửi</span></button></div></div>
+        </form>
+        <div class="composer-footnote"><span id="send-status" role="status">Đang tải lịch sử…</span><span id="composer-help"><strong>Enter</strong> để gửi · <strong>Shift + Enter</strong> để xuống dòng</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="user-dialog"><form id="user-form"><span class="dialog-label">HỒ SƠ CỦA BẠN</span><h2>Bạn muốn được gọi là gì?</h2><p>Tên này sẽ hiển thị trong các tin nhắn của bạn.</p><label for="user-input">Tên hiển thị</label><input id="user-input" maxlength="40" required autocomplete="name"><p id="user-error" class="user-error" role="alert" hidden></p><div class="dialog-actions"><button id="cancel-user" type="button">Hủy</button><button class="primary-button" type="submit">Lưu tên</button></div></form></dialog>
+  <noscript>Vui lòng bật JavaScript để gửi và nhận tin nhắn realtime.</noscript>
+</body>
+</html>

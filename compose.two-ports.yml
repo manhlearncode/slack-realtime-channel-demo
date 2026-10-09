@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: chatdemo
+      POSTGRES_USER: chatdemo
+      POSTGRES_PASSWORD: chatdemo_local
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - chatdemo-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chatdemo -d chatdemo"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  app:
+    image: slack-realtime-channel-demo:local
+    build: .
+    environment:
+      DATABASE_URL: postgresql://chatdemo:chatdemo_local@db:5432/chatdemo
+      HOST: 0.0.0.0
+      PORT: 3000
+      DEMO_AN_URL: http://localhost:3001/?user=An
+      DEMO_BINH_URL: http://localhost:3002/?user=Binh
+    ports:
+      - "${APP_BIND_IP:-127.0.0.1}:3001:3000"
+      - "${APP_BIND_IP:-127.0.0.1}:3002:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  tests:
+    profiles: ["test"]
+    image: slack-realtime-channel-demo:local
+    build: .
+    environment:
+      DATABASE_URL: postgresql://chatdemo:chatdemo_local@db:5432/chatdemo
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["npm", "test"]
+    healthcheck:
+      disable: true
+
+volumes:
+  chatdemo-data:

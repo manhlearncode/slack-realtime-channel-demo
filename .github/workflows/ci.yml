@@ -1,0 +1,32 @@
+name: Realtime demo checks
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: chatdemo
+          POSTGRES_USER: chatdemo
+          POSTGRES_PASSWORD: chatdemo_local
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U chatdemo -d chatdemo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://chatdemo:chatdemo_local@127.0.0.1:5432/chatdemo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
